@@ -22,7 +22,8 @@ fn main() {
     let last_name=user_query("enter last name:").unwrap_or("cannot collect user last name".to_string());
     let balance=atof64("enter balance:").unwrap_or(0.0);
     let account_number=user_query("enter account number:").unwrap_or("cannot collect user account".to_string());
-    let person_1=BankAccount::new(first_name, last_name, balance, account_number);
+    let  person_1=BankAccount::new(first_name, last_name, balance, account_number);
+    let mut person_1=person_1.expect("failed to get person instance");
 
     // println!("\nWhat would you like to do?");
     // println!("1. Check Balance");
@@ -47,8 +48,31 @@ fn main() {
                 print!("exit,program ended gracefully")
             },
             1=>{
-                let person_1_collaspsed=person_1.return
+                print!("Welcome:Account Balance");
+                std::io::stdout().flush().unwrap_or_default();
+                let person_1_collaspsed=person_1.check_amount();
+            },
+            2=>{
+                print!("process to enter amount");
+                let amount =atof64("enter amount to deposit").unwrap_or_default();
+                let person_collasped=person_1.deposit_money(amount).unwrap_or(0.0);
+                println!("amount deposited:{}",person_collasped)
+
+
+            },
+            3=>{
+
+                print!("process  amount to withdraw");
+                let amount =atof64("amount for withdrawal:").unwrap_or_default();
+                let person_collasped=person_1.withdraw_money(amount).unwrap_or(0.0);
+                println!("amount deposited:{}",person_collasped)
+
+            },
+            4=>{
+                let person_account_details=person_1.display_information();
+                println!("accouunt details:\n{:#?}",person_account_details)
             }
+
 
         }
 
